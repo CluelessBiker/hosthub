@@ -1,0 +1,13 @@
+.btn {
+    border: none;
+    padding: var(--spacing-2);
+    text-transform: uppercase;
+    border-radius: var(--spacing-2);
+    color: var(--mui-palette-primary-white);
+    background-color: var(--mui-palette-primary-green);
+}
+
+.iconBtn {
+    border: none;
+    background-color: transparent;
+}
