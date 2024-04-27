@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { Rental } from './types/Rental';
@@ -6,6 +6,7 @@ import RentalData from './components/RentalData';
 import ModalSettings from './components/ModalSettings';
 import IconGear from './assets/svgs/IconGear';
 import btn from './styles/Buttons.module.css';
+import { useSettings } from './context/SettingsContext';
 
 const App = () => {
   const [apiKey, setApiKey] = useState<string>('');
@@ -13,24 +14,20 @@ const App = () => {
   const [properties, setProperties] = useState<[]>([]);
   const [error, setError] = useState<string>('');
 
-  const storageSettings = useMemo(() => {
-    return JSON.parse(localStorage.getItem('settings') || '');
-  }, []);
+  const settings = useSettings();
+
+  useEffect(() => {
+    setApiKey(settings.apiKey);
+  }, [settings]);
 
   useEffect(() => {
     fetchProperties();
-  }, [apiKey, storageSettings]);
+  }, [apiKey, settings]);
 
   useEffect(() => {
     if (apiKey !== '') setOpen(false);
     if (apiKey === '') setOpen(true);
   }, [apiKey]);
-
-  useEffect(() => {
-    if (storageSettings && typeof storageSettings.key === 'string') {
-      setApiKey(storageSettings.key);
-    }
-  }, [storageSettings]);
 
   const fetchProperties = async () => {
     try {
@@ -51,8 +48,6 @@ const App = () => {
       setError('Failed to fetch properties. Please check your API key and try again.');
     }
   };
-
-  console.log(properties);
 
   const settingsButton = (
     <button aria-label={'go to settings'} onClick={() => setOpen(true)}>
@@ -76,7 +71,7 @@ const App = () => {
         </button>
 
         {/*PROMPT KEY ENTRY*/}
-        {apiKey === '' && properties.length === 0 && (
+        {error === '' && apiKey === '' && properties.length === 0 && (
           <>
             <p>
               Oops.
