@@ -1,105 +1,40 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { Rental } from './types/Rental';
-import RentalData from './components/RentalData';
+import RentalPage from './pages/RentalPage';
 import ModalSettings from './components/ModalSettings';
 import IconGear from './assets/svgs/IconGear';
 import btn from './styles/Buttons.module.css';
+import HomePage from './pages/HomePage';
 import { useSettings } from './context/SettingsContext';
 
 const App = () => {
-  const [apiKey, setApiKey] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
-  const [properties, setProperties] = useState<[]>([]);
-  const [error, setError] = useState<string>('');
 
   const settings = useSettings();
 
   useEffect(() => {
-    setApiKey(settings.apiKey);
+    if (settings.apiKey === '') setOpen(true);
   }, [settings]);
-
-  useEffect(() => {
-    fetchProperties();
-  }, [apiKey, settings]);
-
-  useEffect(() => {
-    if (apiKey !== '') setOpen(false);
-    if (apiKey === '') setOpen(true);
-  }, [apiKey]);
-
-  const fetchProperties = async () => {
-    try {
-      const response = await fetch('https://eric.hosthub.com/api/2019-03-01/rentals', {
-        method: 'GET',
-        headers: {
-          Authorization: apiKey,
-          'Content-Type': 'application/json',
-        },
-      });
-      if (!response.ok) {
-        throw new Error('Failed to fetch properties');
-      }
-      const json = await response.json();
-      setProperties(json.data);
-      setError('');
-    } catch (error) {
-      setError('Failed to fetch properties. Please check your API key and try again.');
-    }
-  };
-
-  const settingsButton = (
-    <button aria-label={'go to settings'} onClick={() => setOpen(true)}>
-      Settings
-    </button>
-  );
 
   return (
     <div className={'bodyContainer'}>
+      <button
+        className={btn.iconBtn}
+        aria-label={'go to settings'}
+        onClick={() => setOpen(true)}
+      >
+        <IconGear color={'var(--mui-palette-primary-darkGrey)'} />
+      </button>
+
       <div className={'bodyInner'}>
         <Routes>
-          <Route path={'/'} element={<></>} />
+          <Route path={'/'} element={<HomePage handleSettings={() => setOpen(true)} />} />
+          <Route path={'/rental/:id'} element={<RentalPage />} />
         </Routes>
 
-        <button
-          className={btn.iconBtn}
-          aria-label={'go to settings'}
-          onClick={() => setOpen(true)}
-        >
-          <IconGear color={'var(--mui-palette-primary-darkGrey)'} />
-        </button>
-
-        {/*PROMPT KEY ENTRY*/}
-        {error === '' && apiKey === '' && properties.length === 0 && (
-          <>
-            <p>
-              Oops.
-              <br /> Looks like you need to enter your API key to get started.
-            </p>
-            {settingsButton}
-          </>
-        )}
-
-        {/*DISPLAY IF NO LISTINGS ARE AVAILABLE*/}
-        {apiKey !== '' && properties.length === 0 && error === '' && (
-          <p>There are no listings to display</p>
-        )}
-
-        {error !== '' && (
-          <>
-            <p>{error}</p> {settingsButton}
-          </>
-        )}
-
-        {/*VIEW PROPERTY LISTINGS*/}
-        {apiKey !== '' &&
-          error === '' &&
-          properties.length > 0 &&
-          properties.map((data: Rental) => <RentalData key={data.id} data={data} />)}
+        <ModalSettings open={open} setOpen={setOpen} />
       </div>
-
-      <ModalSettings open={open} setOpen={setOpen} />
     </div>
   );
 };
