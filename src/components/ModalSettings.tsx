@@ -4,6 +4,7 @@ import Modal from '@mui/material/Modal';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import btn from '../styles/Buttons.module.css';
+import { useSetSettings } from '../context/SettingsContext';
 
 type Props = {
   open: boolean;
@@ -11,24 +12,22 @@ type Props = {
 };
 
 const ModalSettings: FC<Props> = ({ open, setOpen }) => {
+  const setSettings = useSetSettings();
+
   const [apiKey, setApiKey] = useState<string>('');
-  const [timeFormat, setTimeFormat] = useState<string | null>('24');
+  const [timeFormat, setTimeFormat] = useState<string>('24');
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setApiKey(event.target.value);
   };
 
-  const handleTimeFormat = (
-    _event: MouseEvent<HTMLElement>,
-    newFormat: string | null,
-  ) => {
+  const handleTimeFormat = (_event: MouseEvent<HTMLElement>, newFormat: string) => {
     setTimeFormat(newFormat);
   };
 
   const handleSave = () => {
-    localStorage.setItem('settings', JSON.stringify({ key: apiKey, time: timeFormat }));
+    setSettings({ apiKey: apiKey, timeFormat: timeFormat });
     setOpen(false);
-    window.location.reload();
   };
 
   const handleClose = () => setOpen(false);
