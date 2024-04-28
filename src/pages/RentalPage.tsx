@@ -47,7 +47,7 @@ const RentalPage = () => {
 
   return (
     <>
-      {error !== '' && <p>error</p>}
+      {error !== '' && <p>{error}</p>}
       {error === '' && rental && <RentalData fullDetails data={rental} />}
     </>
   );
