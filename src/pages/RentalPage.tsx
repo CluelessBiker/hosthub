@@ -6,6 +6,7 @@ import RentalData from '../components/RentalData';
 import ErrorPrompts from '../components/ErrorPrompts';
 import btn from '../styles/Buttons.module.css';
 import { useNavigate } from 'react-router-dom';
+import CalendarEvents from '../components/CalendarEvents';
 
 type Props = {
   handleSettings: () => void;
@@ -68,6 +69,7 @@ const RentalPage: FC<Props> = ({ handleSettings }) => {
       >
         back
       </button>
+      <CalendarEvents id={id || ''} apiKey={settings.apiKey} />
     </>
   );
 };
