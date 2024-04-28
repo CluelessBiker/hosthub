@@ -1,13 +1,13 @@
 import { ChangeEvent, FC, MouseEvent, useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Modal from '@mui/material/Modal';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import btn from '../styles/Buttons.module.css';
 import { defaultSettings, useSetSettings, useSettings } from '../context/SettingsContext';
 import { Settings } from '../types/Settings';
 import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import ToggleButtons from './ToggleButtons';
+import { dateSelections, timeSelections } from '../constants/constants';
 
 type Props = {
   open: boolean;
@@ -70,47 +70,25 @@ const ModalSettings: FC<Props> = ({ open, setOpen }) => {
           }
         />
 
-        <label htmlFor={'time'} className={'dataLabel'}>
-          select time format :
-        </label>
-        <ToggleButtonGroup
-          exclusive
-          fullWidth
-          id={'time'}
-          aria-label={'time format'}
+        <ToggleButtons
+          id={'time format'}
+          data={timeSelections}
+          label={'select time format :'}
           value={siteSettings.timeFormat}
-          onChange={(_event: MouseEvent<HTMLElement>, value) =>
+          onChange={(_event: MouseEvent<HTMLElement>, value: string) =>
             handleFormat(value, 'timeFormat')
           }
-        >
-          <ToggleButton value={'24'} aria-label={'24 hour time format'}>
-            <p>24H</p>
-          </ToggleButton>
-          <ToggleButton value={'12'} aria-label={'12 hour time format'}>
-            <p>12H</p>
-          </ToggleButton>
-        </ToggleButtonGroup>
+        />
 
-        <label htmlFor={'date'} className={'dataLabel'}>
-          select date format :
-        </label>
-        <ToggleButtonGroup
-          exclusive
-          fullWidth
-          id={'date'}
-          aria-label={'date format'}
+        <ToggleButtons
+          id={'date format'}
+          data={dateSelections}
+          label={'select date format :'}
           value={siteSettings.dateFormat}
-          onChange={(_event: MouseEvent<HTMLElement>, value) =>
+          onChange={(_event: MouseEvent<HTMLElement>, value: string) =>
             handleFormat(value, 'dateFormat')
           }
-        >
-          <ToggleButton value={'eu'} aria-label={'EU date format'}>
-            <p>DD-MM-YYYY</p>
-          </ToggleButton>
-          <ToggleButton value={'us'} aria-label={'US date format'}>
-            <p>MM-DD-YYYY</p>
-          </ToggleButton>
-        </ToggleButtonGroup>
+        />
 
         <label htmlFor={'dateDisplay'} className={'dataLabel'}>
           date display :
