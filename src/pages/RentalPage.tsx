@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, FC } from 'react';
 import { useParams } from 'react-router-dom';
 import { Rental } from '../types/Rental';
 import { useSettings } from '../context/SettingsContext';
 import RentalData from '../components/RentalData';
+import ErrorPrompts from '../components/ErrorPrompts';
+import btn from '../styles/Buttons.module.css';
+import { useNavigate } from 'react-router-dom';
 
-const RentalPage = () => {
+type Props = {
+  handleSettings: () => void;
+};
+
+const RentalPage: FC<Props> = ({ handleSettings }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const settings = useSettings();
 
@@ -21,6 +29,10 @@ const RentalPage = () => {
     if (apiKey === '') return;
     fetchRental();
   }, [id, apiKey]);
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
 
   const fetchRental = async () => {
     try {
@@ -47,8 +59,15 @@ const RentalPage = () => {
 
   return (
     <>
-      {error !== '' && <p>{error}</p>}
+      <ErrorPrompts error={error} apiKey={apiKey} handleSettings={handleSettings} />
       {error === '' && rental && <RentalData fullDetails data={rental} />}
+      <button
+        className={btn.btn}
+        onClick={handleGoHome}
+        aria-label={'return to home page'}
+      >
+        back
+      </button>
     </>
   );
 };
