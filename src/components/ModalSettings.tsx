@@ -36,18 +36,18 @@ const ModalSettings: FC<Props> = ({ open, setOpen }) => {
     <Modal
       open={open}
       onClose={handleClose}
-      aria-labelledby="settings modal"
-      aria-describedby="settings modal"
+      aria-labelledby={'settings modal'}
+      aria-describedby={'settings modal'}
     >
       <div className={'modal'}>
         <h3 className={'contentTitle'}>settings</h3>
         <TextField
           multiline
-          label="API Key"
-          id="outlined-textarea"
           value={apiKey}
-          placeholder="enter your API key"
+          label={'API Key'}
+          id={'outlined-textarea'}
           onChange={handleInputChange}
+          placeholder={'enter your API key'}
         />
 
         <ToggleButtonGroup
@@ -57,10 +57,10 @@ const ModalSettings: FC<Props> = ({ open, setOpen }) => {
           onChange={handleTimeFormat}
           aria-label={'text alignment'}
         >
-          <ToggleButton value={'12'} aria-label={'left aligned'}>
+          <ToggleButton value={'12'} aria-label={'12 hour time format'}>
             <p>12H</p>
           </ToggleButton>
-          <ToggleButton value={'24'} aria-label={'left aligned'}>
+          <ToggleButton value={'24'} aria-label={'24 hour time format'}>
             <p>24H</p>
           </ToggleButton>
         </ToggleButtonGroup>
