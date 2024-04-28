@@ -24,7 +24,7 @@ const App = () => {
         aria-label={'go to settings'}
         onClick={() => setOpen(true)}
       >
-        <IconGear color={'var(--mui-palette-primary-darkGrey)'} />
+        <IconGear color={'var(--mui-palette-primary-green)'} />
       </button>
 
       <div className={'bodyInner'}>
