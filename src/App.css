@@ -44,6 +44,13 @@
   font-size: var(--typography-size-title-lg);
 }
 
+.subHeading {
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--mui-palette-primary-green);
+  font-size: var(--typography-size-title);
+}
+
 .dataLabel {
   max-width: 300px;
   text-transform: uppercase;
