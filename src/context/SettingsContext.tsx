@@ -1,9 +1,11 @@
 import { createContext, useContext, ReactNode, FC, useState } from 'react';
 import { Settings } from '../types/Settings';
 
-const defaultSettings: Settings = {
+export const defaultSettings: Settings = {
   apiKey: '',
   timeFormat: '24',
+  dateFormat: 'eu',
+  dateSeparator: '-',
 };
 
 export const SettingsContext = createContext(defaultSettings);
