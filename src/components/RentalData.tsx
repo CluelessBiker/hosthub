@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import btn from '../styles/Buttons.module.css';
 import { useSettings } from '../context/SettingsContext';
 import formatTime from '../utils/formatTime';
-import formatDate from '../utils/formatDate';
 
 type Props = {
   data: Rental;
@@ -60,14 +59,6 @@ const RentalData: FC<Props> = ({ data, fullDetails = false }) => {
             </p>
             <p>
               <span className={'dataLabel'}>Property manager:</span> {data.name}
-            </p>
-            <p>
-              <span className={'dataLabel'}>Last updated:</span>{' '}
-              {formatDate(
-                '2024-04-28T09:51:12.023Z',
-                settings.dateFormat,
-                settings.dateSeparator,
-              )}
             </p>
           </>
         )}
