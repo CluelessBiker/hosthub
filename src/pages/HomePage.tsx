@@ -55,10 +55,8 @@ const HomePage: FC<Props> = ({ handleSettings }) => {
       {/*PROMPT KEY ENTRY*/}
       {error === '' && apiKey === '' && (
         <>
-          <p>
-            Oops!
-            <br /> Looks like you need to enter your API key to get started.
-          </p>
+          <p className={'warningText'}>Oops!</p>
+          <p>Looks like you need to enter your API key to get started.</p>
           {settingsButton}
         </>
       )}
@@ -68,17 +66,20 @@ const HomePage: FC<Props> = ({ handleSettings }) => {
         <p>There are no listings to display</p>
       )}
 
+      {/*NETWORK ERROR MESSAGE*/}
       {error !== '' && (
         <>
-          <p>{error}</p> {settingsButton}
+          <p className={'errorMessage'}>{error}</p> {settingsButton}
         </>
       )}
 
       {/*VIEW PROPERTY LISTINGS*/}
-      {apiKey !== '' &&
-        error === '' &&
-        properties.length > 0 &&
-        properties.map((data: Rental) => <RentalData key={data.id} data={data} />)}
+      <div className={'boxContentContainer'}>
+        {apiKey !== '' &&
+          error === '' &&
+          properties.length > 0 &&
+          properties.map((data: Rental) => <RentalData key={data.id} data={data} />)}
+      </div>
     </>
   );
 };
