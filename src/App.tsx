@@ -30,7 +30,10 @@ const App = () => {
       <div className={'bodyInner'}>
         <Routes>
           <Route path={'/'} element={<HomePage handleSettings={() => setOpen(true)} />} />
-          <Route path={'/rental/:id'} element={<RentalPage />} />
+          <Route
+            path={'/rental/:id'}
+            element={<RentalPage handleSettings={() => setOpen(true)} />}
+          />
         </Routes>
 
         <ModalSettings open={open} setOpen={setOpen} />
