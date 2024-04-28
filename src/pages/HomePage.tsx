@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
 import { useSettings } from '../context/SettingsContext';
-import btn from '../styles/Buttons.module.css';
 import RentalData from '../components/RentalData';
 import { Rental } from '../types/Rental';
+import ErrorPrompts from '../components/ErrorPrompts';
 
 type Props = {
   handleSettings: () => void;
@@ -44,34 +44,14 @@ const HomePage: FC<Props> = ({ handleSettings }) => {
     }
   };
 
-  const settingsButton = (
-    <button className={btn.btn} aria-label={'go to settings'} onClick={handleSettings}>
-      settings
-    </button>
-  );
-
   return (
     <>
-      {/*PROMPT KEY ENTRY*/}
-      {error === '' && apiKey === '' && (
-        <>
-          <p className={'warningText'}>Oops!</p>
-          <p>Looks like you need to enter your API key to get started.</p>
-          {settingsButton}
-        </>
-      )}
-
-      {/*DISPLAY IF NO LISTINGS ARE AVAILABLE*/}
-      {apiKey !== '' && properties.length === 0 && error === '' && (
-        <p>There are no listings to display</p>
-      )}
-
-      {/*NETWORK ERROR MESSAGE*/}
-      {error !== '' && (
-        <>
-          <p className={'errorMessage'}>{error}</p> {settingsButton}
-        </>
-      )}
+      <ErrorPrompts
+        error={error}
+        apiKey={apiKey}
+        properties={properties}
+        handleSettings={handleSettings}
+      />
 
       {/*VIEW PROPERTY LISTINGS*/}
       <div className={'boxContentContainer'}>
