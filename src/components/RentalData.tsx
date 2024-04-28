@@ -15,10 +15,6 @@ const RentalData: FC<Props> = ({ data, fullDetails = false }) => {
   const navigate = useNavigate();
   const settings = useSettings();
 
-  const handleGoHome = () => {
-    navigate('/');
-  };
-
   const handleViewListing = () => {
     navigate(`/rental/${data.id}`);
   };
@@ -76,15 +72,6 @@ const RentalData: FC<Props> = ({ data, fullDetails = false }) => {
           </>
         )}
       </div>
-      {fullDetails && (
-        <button
-          className={btn.btn}
-          onClick={handleGoHome}
-          aria-label={'return to home page'}
-        >
-          back
-        </button>
-      )}
     </>
   );
 };
