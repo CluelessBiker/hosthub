@@ -1,4 +1,6 @@
-const timeSelections = [
+import { ToggleOptions } from '../types/ToggleOptions';
+
+const timeSelections: ToggleOptions[] = [
   {
     value: '24',
     ariaLabel: '24 hour time format',
@@ -11,7 +13,7 @@ const timeSelections = [
   },
 ];
 
-const dateSelections = [
+const dateSelections: ToggleOptions[] = [
   {
     value: 'eu',
     ariaLabel: 'EU date format',
