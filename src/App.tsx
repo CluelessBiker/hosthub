@@ -14,6 +14,7 @@ const App = () => {
   const settings = useSettings();
 
   useEffect(() => {
+    if (settings.apiKey !== '') setOpen(false);
     if (settings.apiKey === '') setOpen(true);
   }, [settings]);
 
