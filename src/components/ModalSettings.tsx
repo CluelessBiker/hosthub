@@ -43,6 +43,7 @@ const ModalSettings: FC<Props> = ({ open, setOpen }) => {
 
   const handleSave = () => {
     setSettings(siteSettings);
+    localStorage.setItem('settings', JSON.stringify(siteSettings));
     setOpen(false);
   };
 
